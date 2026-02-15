@@ -1,0 +1,44 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "studies": {
+            "title": "Studies",
+            "transformation": {
+                "fields": [
+                    "schema_version",
+                    "type",
+                    "nct_id",
+                    "title",
+                    "overall_status",
+                    "phases",
+                    "conditions",
+                    "interventions",
+                    "sponsor",
+                    "enrollment",
+                    "start_date",
+                    "completion_date",
+                    "study_url"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "schema_version": { "label": "Schema", "format": "text" },
+                    "type": { "label": "Type", "format": "text" },
+                    "nct_id": { "label": "NCT ID", "format": "text" },
+                    "title": { "label": "Title", "format": "text" },
+                    "overall_status": { "label": "Status", "format": "text" },
+                    "phases": { "label": "Phase", "format": "text" },
+                    "conditions": { "label": "Conditions", "format": "text" },
+                    "interventions": { "label": "Interventions", "format": "text" },
+                    "sponsor": { "label": "Sponsor", "format": "text" },
+                    "enrollment": { "label": "Enrollment", "format": "number" },
+                    "start_date": { "label": "Start Date", "format": "text" },
+                    "completion_date": { "label": "Completion", "format": "text" },
+                    "study_url": { "label": "URL", "format": "link" }
+                }
+            }
+        }
+    }
+}

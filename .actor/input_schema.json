@@ -1,0 +1,133 @@
+{
+    "title": "Clinical Trials Scraper - Input",
+    "description": "Search ClinicalTrials.gov for studies by condition, intervention, sponsor, or keyword. Look up individual trials by NCT ID. No API key required.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "mode": {
+            "sectionCaption": "Scraping Mode",
+            "sectionDescription": "Select what to do: search clinical trials, look up a specific study by NCT ID, or search by medical condition.",
+            "title": "Scraping mode",
+            "type": "string",
+            "description": "Select what to do: search studies, get a specific study by NCT ID, or search by condition.",
+            "editor": "select",
+            "enum": ["search_studies", "get_study", "search_by_condition"],
+            "enumTitles": [
+                "Search Studies (keyword, condition, intervention, sponsor)",
+                "Get Study (single study by NCT ID)",
+                "Search by Condition (condition-focused search)"
+            ],
+            "default": "search_studies"
+        },
+        "query": {
+            "sectionCaption": "Search Filters",
+            "sectionDescription": "Identify the studies you want. Provide a keyword, condition, intervention, sponsor, or NCT ID.",
+            "title": "Search query",
+            "type": "string",
+            "description": "General search term. Searches across all study fields.",
+            "editor": "textfield",
+            "prefill": "lung cancer"
+        },
+        "nctId": {
+            "title": "NCT ID",
+            "type": "string",
+            "description": "ClinicalTrials.gov identifier (e.g., NCT05678901). Required for get_study mode.",
+            "editor": "textfield"
+        },
+        "condition": {
+            "title": "Condition / Disease",
+            "type": "string",
+            "description": "Medical condition or disease (e.g., 'diabetes', 'breast cancer', 'Alzheimer'). Required for search_by_condition mode.",
+            "editor": "textfield"
+        },
+        "intervention": {
+            "title": "Intervention / Treatment",
+            "type": "string",
+            "description": "Drug, device, procedure, or other intervention (e.g., 'pembrolizumab', 'surgery').",
+            "editor": "textfield"
+        },
+        "sponsor": {
+            "title": "Sponsor",
+            "type": "string",
+            "description": "Study sponsor or funder (e.g., 'Pfizer', 'National Cancer Institute').",
+            "editor": "textfield"
+        },
+        "status": {
+            "title": "Study status",
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Filter by overall status. Options: RECRUITING, NOT_YET_RECRUITING, ACTIVE_NOT_RECRUITING, COMPLETED, ENROLLING_BY_INVITATION, SUSPENDED, TERMINATED, WITHDRAWN.",
+            "editor": "json"
+        },
+        "phase": {
+            "title": "Trial phase",
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Filter by trial phase. Options: EARLY_PHASE1, PHASE1, PHASE2, PHASE3, PHASE4, NA.",
+            "editor": "json"
+        },
+        "studyType": {
+            "title": "Study type",
+            "type": "string",
+            "description": "Filter by study type: INTERVENTIONAL, OBSERVATIONAL, EXPANDED_ACCESS.",
+            "editor": "select",
+            "enum": ["", "INTERVENTIONAL", "OBSERVATIONAL", "EXPANDED_ACCESS"],
+            "enumTitles": [
+                "All types",
+                "Interventional (clinical trial)",
+                "Observational",
+                "Expanded Access"
+            ]
+        },
+        "dateFrom": {
+            "title": "Start date from",
+            "type": "string",
+            "description": "Only include studies starting on or after this date (YYYY-MM-DD).",
+            "editor": "textfield"
+        },
+        "dateTo": {
+            "title": "Start date to",
+            "type": "string",
+            "description": "Only include studies starting on or before this date (YYYY-MM-DD).",
+            "editor": "textfield"
+        },
+        "maxResults": {
+            "sectionCaption": "Output Settings",
+            "sectionDescription": "Control how many results are returned.",
+            "title": "Max results",
+            "type": "integer",
+            "description": "Maximum number of studies to return (1-1000). Free users are limited to 25 per run.",
+            "default": 100,
+            "minimum": 1,
+            "maximum": 1000
+        },
+        "requestIntervalSecs": {
+            "sectionCaption": "Advanced Settings",
+            "sectionDescription": "Configure request behavior.",
+            "title": "Request interval (seconds)",
+            "type": "number",
+            "description": "Minimum seconds between requests. Lower is faster but may trigger rate limits.",
+            "default": 0.2,
+            "minimum": 0.1,
+            "maximum": 5
+        },
+        "timeoutSecs": {
+            "title": "HTTP timeout (seconds)",
+            "type": "integer",
+            "description": "Timeout for each HTTP request.",
+            "default": 30,
+            "minimum": 5,
+            "maximum": 120
+        },
+        "maxRetries": {
+            "title": "Max retries",
+            "type": "integer",
+            "description": "Maximum retry attempts on failed or rate-limited requests.",
+            "default": 5,
+            "minimum": 0,
+            "maximum": 10
+        }
+    },
+    "required": ["mode"],
+    "additionalProperties": false
+}

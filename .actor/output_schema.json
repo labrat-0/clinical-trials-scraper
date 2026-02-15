@@ -1,0 +1,31 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "schema_version": { "type": "string" },
+        "type": { "type": "string" },
+        "nct_id": { "type": "string" },
+        "title": { "type": "string" },
+        "acronym": { "type": "string" },
+        "overall_status": { "type": "string" },
+        "start_date": { "type": "string" },
+        "completion_date": { "type": "string" },
+        "last_update_date": { "type": "string" },
+        "brief_summary": { "type": "string" },
+        "conditions": { "type": "array" },
+        "interventions": { "type": "array" },
+        "phases": { "type": "array" },
+        "study_type": { "type": "string" },
+        "enrollment": { "type": "integer" },
+        "enrollment_type": { "type": "string" },
+        "sponsor": { "type": "string" },
+        "collaborators": { "type": "array" },
+        "sex": { "type": "string" },
+        "min_age": { "type": "string" },
+        "max_age": { "type": "string" },
+        "healthy_volunteers": { "type": "string" },
+        "primary_outcomes": { "type": "array" },
+        "secondary_outcomes": { "type": "array" },
+        "locations": { "type": "array" },
+        "study_url": { "type": "string" }
+    }
+}
