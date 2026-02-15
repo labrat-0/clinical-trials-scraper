@@ -1,10 +1,10 @@
 # Clinical Trials Scraper
 
-Search ClinicalTrials.gov for studies by condition, intervention, sponsor, or keyword. Look up individual trials by NCT ID. No API key required.
+Search ClinicalTrials.gov for studies by condition, intervention, sponsor, or keyword. Look up individual trials by NCT ID. No API key required. MCP-ready for AI agent integration.
 
 ## What does it do?
 
-Clinical Trials Scraper queries the ClinicalTrials.gov API v2 and returns structured data about clinical studies worldwide. It extracts trial metadata, eligibility criteria, interventions, outcomes, sponsors, and locations into clean, normalized JSON.
+Clinical Trials Scraper queries the ClinicalTrials.gov API v2 and returns structured data about clinical studies worldwide. It extracts trial metadata, eligibility criteria, interventions, outcomes, sponsors, and locations into clean, normalized JSON. Returns consistent output -- ready for analysis, pharma pipelines, or consumption by AI agents via MCP.
 
 **Use cases:**
 
@@ -207,16 +207,31 @@ This actor uses **pay-per-event (PPE) pricing**. You pay only for the results yo
 
 ---
 
-## MCP integration
+## MCP Integration
 
 This actor works as an MCP tool through Apify's hosted MCP server. No custom server needed.
 
-- Endpoint: `https://mcp.apify.com?tools=<your-actor-id>`
-- Auth: `Authorization: Bearer <APIFY_TOKEN>`
-- Transport: Streamable HTTP
-- Works with: Claude Desktop, Cursor, VS Code, Windsurf, Warp, Gemini CLI
+- **Endpoint:** `https://mcp.apify.com?tools=labrat011/clinical-trials-scraper`
+- **Auth:** `Authorization: Bearer <APIFY_TOKEN>`
+- **Transport:** Streamable HTTP
+- **Works with:** Claude Desktop, Cursor, VS Code, Windsurf, Warp, Gemini CLI
 
-AI agents can use this actor to search clinical trials, look up study details, and monitor drug development pipelines -- all in real time.
+**Example MCP config (Claude Desktop / Cursor):**
+
+```json
+{
+    "mcpServers": {
+        "clinical-trials-scraper": {
+            "url": "https://mcp.apify.com?tools=labrat011/clinical-trials-scraper",
+            "headers": {
+                "Authorization": "Bearer <APIFY_TOKEN>"
+            }
+        }
+    }
+}
+```
+
+AI agents can use this actor to search clinical trials, look up study details, track drug development pipelines, and monitor trial status changes -- all as a callable MCP tool.
 
 ---
 
