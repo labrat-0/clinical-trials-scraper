@@ -6,14 +6,100 @@ Search ClinicalTrials.gov for studies by condition, intervention, sponsor, or ke
 
 Clinical Trials Scraper queries the ClinicalTrials.gov API v2 and returns structured data about clinical studies worldwide. It extracts trial metadata, eligibility criteria, interventions, outcomes, sponsors, and locations into clean, normalized JSON. Returns consistent output -- ready for analysis, pharma pipelines, or consumption by AI agents via MCP.
 
-**Use cases:**
+## 👥 Who Uses This
 
-- **Pharma pipeline intelligence** -- track drug development across phases and therapeutic areas
-- **Competitive analysis** -- monitor competitor clinical programs by sponsor, condition, or intervention
-- **Medical research** -- find trials for specific conditions, drugs, or procedures
-- **Patient recruitment** -- identify recruiting trials by condition, location, and eligibility
-- **Regulatory monitoring** -- track trial status changes, completions, and terminations
-- **AI agent tooling** -- expose as an MCP tool so AI agents can query clinical trial data in real time
+### 💊 Pharma and Biotech Pipeline Teams
+
+You need to track what competitors are running — which conditions, which phases, which sponsors. ClinicalTrials.gov has 500,000+ studies. This actor lets you query by sponsor name, intervention, or therapeutic area and get structured output ready for pipeline dashboards without manual site navigation.
+
+```json
+{
+    "mode": "search_studies",
+    "sponsor": "Pfizer",
+    "phase": "PHASE3",
+    "status": "RECRUITING",
+    "maxResults": 200
+}
+```
+
+Run on a schedule to catch new trial registrations. Cross-reference with FDA Drug Labels and FDA Adverse Events for a full compound dossier.
+
+---
+
+### 🏥 Patient Recruitment and Clinical Operations Teams
+
+You're identifying recruiting trials for specific conditions and locations to support patient referrals, site feasibility assessments, or registry building. The structured eligibility and location fields let you filter without reading each trial page.
+
+```json
+{
+    "mode": "search_by_condition",
+    "condition": "non-small cell lung cancer",
+    "status": "RECRUITING",
+    "maxResults": 100
+}
+```
+
+Filter by `phase`, `studyType` (interventional vs observational), and date range to narrow to relevant protocols. Pull `nct_id` lists for downstream processing with `get_study` mode to retrieve full eligibility text.
+
+---
+
+### 🔬 Academic Researchers and Systematic Reviewers
+
+You need a structured trial inventory for a systematic review or meta-analysis — not hand-copied PDFs, but normalized JSON with consistent field names across thousands of trials. Batch search across multiple condition terms, deduplicate by NCT ID, and export to CSV.
+
+```json
+{
+    "mode": "search_studies",
+    "query": "GLP-1 receptor agonist type 2 diabetes cardiovascular",
+    "studyType": "INTERVENTIONAL",
+    "maxResults": 500
+}
+```
+
+Combine with PubMed Scraper to match trials to their published results. The `nct_id` links directly to the ClinicalTrials.gov record; PMID cross-references appear in the `references` field where available.
+
+---
+
+### 📋 Regulatory Affairs and Compliance Teams
+
+You need to monitor trial status changes — completions, terminations, protocol amendments — for your own programs or competitor benchmarking. Track when trials enter Phase 3, when they complete, or when they're terminated early (often a safety signal).
+
+```json
+{
+    "mode": "search_studies",
+    "sponsor": "YourCompany",
+    "status": "COMPLETED",
+    "startDateFrom": "2023-01-01",
+    "maxResults": 50
+}
+```
+
+Use `get_study` mode with specific NCT IDs to pull the full record including primary and secondary outcomes, protocol amendments, and results references.
+
+---
+
+### 🤖 AI/LLM Engineers and Agent Builders
+
+You're building biomedical AI pipelines — RAG systems grounded in trial data, agents that can answer questions about active trials, or research assistants that cross-reference literature with ongoing studies.
+
+**MCP tool config:**
+
+```json
+{
+    "mcpServers": {
+        "clinical-trials-scraper": {
+            "url": "https://mcp.apify.com?tools=labrat011/clinical-trials-scraper",
+            "headers": {
+                "Authorization": "Bearer <APIFY_TOKEN>"
+            }
+        }
+    }
+}
+```
+
+Combine with PubMed Scraper and FDA Drug Labels in the same MCP config to give your agent access to the full biomedical research stack — literature, trials, and drug labeling — as callable tools.
+
+---
 
 ## Features
 
@@ -256,6 +342,18 @@ Over 500,000 studies from 200+ countries.
 ### Can I combine filters?
 
 Yes. All filters are AND-combined. For example, search for Phase 3 recruiting trials for lung cancer with a specific sponsor.
+
+---
+
+## 🔗 Related Actors
+
+| Actor | What it does | Pairs well when... |
+|-------|-------------|---------------------|
+| [PubMed Scraper](https://apify.com/labrat011/pubmed-scraper) | 35M+ biomedical abstracts from NCBI | Match trials to published results by NCT ID or condition |
+| [FDA Drug Labels Scraper](https://apify.com/labrat011/fda-drug-labels-scraper) | FDA-approved drug labeling data | Look up the label for a trial's intervention drug |
+| [FDA Adverse Events Scraper](https://apify.com/labrat011/fda-adverse-events-scraper) | FAERS post-market safety reports | Cross-reference trial drug with real-world adverse event signals |
+| [FDA Orange Book Scraper](https://apify.com/labrat011/fda-orange-book-scraper) | Patent, exclusivity, and generic equivalence data | Check approval and patent status of trial interventions |
+| [NPI Provider Contact Finder](https://apify.com/labrat011/npi-provider-contact-finder) | Healthcare provider directory | Find principal investigators or recruiting site contacts |
 
 ---
 
